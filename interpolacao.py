@@ -1,35 +1,42 @@
 #/usr/bin/env python3
 
 """Lista de e-mail"""
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __author__ = 'José Orlando'
 
 
-email_template = """
-Olá, %(nome)s! Tudo bem?
 
-Temos um curso a sua disposição. É o curso de %(curso)s.
-Temos ainda %(vaga)d vagas.
+import sys
+import os
 
-Está saindo por apenas %(valor).2f. Garanta já a sua vaga!
+arguments = sys.argv[1:]
+if not arguments:
+   print('Informe o nome do arquivo de e-mails: ')
+   sys.exit(1)
+   
+filename = arguments[0]
+templatename = arguments[1]
 
-CodeForAll por uma sociedade mais igualitária.
+path = os.curdir
+filepath = os.path.join(path, filename)
+templatepath = os.path.join(path, templatename)
 
-Vamos juntos : )
-"""
-
-clientes = ['Antonio', 'Altamira', 'Tainá']
-
-for cliente in clientes:
+for line in open(filepath):
+    name, email = line.split(',')
+   
+   #TODO: Substituir por envio de e-mail 
+    print(f'Enviando e-mail para: {email}')
+    print()
     print(
-       email_template
+       open(templatepath).read()
        %{
-        'nome': cliente,
+        'nome': name,
         'curso': 'Python',
         'vaga': 3,
         'valor': 200.50,
        }
     )
+    print('-' * 50)
 
 
 
