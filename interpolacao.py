@@ -8,6 +8,26 @@ __author__ = 'José Orlando'
 
 import sys
 import os
+import logging
+
+from logging import handlers
+
+# BOILERPLATE
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("ze", log_level)
+fh = handlers.RotatingFileHandler(
+   "meulog_interpolacao.log", 
+   maxBytes=300, 
+   backupCount=10,
+)
+fh.setLevel(log_level)
+fmt = logging.Formatter(
+    '%(asctime)s  %(name)s  %(levelname)s '
+    'l:%(lineno)d f:%(filename)s: %(message)s'
+)
+fh.setFormatter(fmt)
+log.addHandler(fh)
+
 
 arguments = sys.argv[1:]
 if not arguments:

@@ -1,0 +1,4 @@
+Nova nota1	tech1	Python é massa!
+Nova nota2	tech2	Python é demais
+Nova nota3	tech1	Linux é o melhor SO
+Nova nota3	livro	Leia um livro

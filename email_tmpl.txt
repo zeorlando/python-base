@@ -1,0 +1,10 @@
+Olá, %(nome)s! Tudo bem?
+
+Temos um curso a sua disposição. É o curso de %(curso)s.
+Temos ainda %(vaga)d vagas.
+
+Está saindo por apenas %(valor).2f. Garanta já a sua vaga!
+
+CodeForAll por uma sociedade mais igualitária.
+
+Vamos juntos : )

@@ -28,7 +28,10 @@ if not arguments:
     sys.exit(1)
 
 if arguments[0] == 'new':
-    title = arguments[1]
+    try:
+        title = arguments[1]
+    except IndexError:
+        title = input('Qual é o título: ').strip().title()
     text = [
         f'{title}',
         input('tag: ').strip(),
@@ -38,9 +41,13 @@ if arguments[0] == 'new':
         file_.write('\t'.join(text) + '\n')
 
 if arguments[0] == 'read':
+    try:
+        arg_tag = arguments[1].lower()
+    except IndexError:
+        arg_tag = input('Qual a tag: ').strip().lower()
     for line in open(filepath):
         title, tag, text = line.split('\t')
-        if tag.lower() == arguments[1].lower():
+        if tag.lower() == arg_tag:
             print(f'{title}')
             print(f'{text}')
             print('-' * 30)

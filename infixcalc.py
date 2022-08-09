@@ -2,8 +2,25 @@
 
 import os
 import sys
+import logging
 
+from logging import handlers
 from datetime import datetime
+
+log_level = os.getenv('LOG_LEVEL', 'WARNING').upper()
+log = logging.Logger('ze', log_level)
+fh = handlers.RotatingFileHandler(
+    'log_infixcalc.log',
+    maxBytes=300,
+    backupCount=10,
+)
+fh.setLevel(log_level)
+fmt = logging.Formatter(
+    '%(asctime)s  %(name)s  %(levelname)s '
+    'l:%(lineno)d f:%(filename)s: %(message)s'
+)
+fh.setFormatter(fmt)
+log.addHandler(fh)
 
 arguments = sys.argv[1:]
 
