@@ -43,7 +43,7 @@ while True:
 
 temperatura, umidade = info.values()
 
-if temperatura > 45:
+if temperatura > 50:
     print('ALERTA!!! 🥵 Perigo calor extremo')
 elif temperatura >= 10 and temperatura <= 30:
     print('😀 Normal')
