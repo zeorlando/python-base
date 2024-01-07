@@ -32,7 +32,7 @@ log_level = os.getenv('LOG_LEVEL', 'WARNING').upper()
 log = logging.Logger('ze', log_level)
 #ch = logging.StreamHandler()
 #ch.setLevel(log_level)
-fh = handler.RotatingFileHandler(
+fh = handlers.RotatingFileHandler(
     'meulog.log',
     maxBytes=300, 
     backupCount=10,
