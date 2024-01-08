@@ -19,7 +19,7 @@ Execução:
     ./hello.py
 """
 __version__ = '0.1.3 '
-__author__ = 'José Orlando de Queiroz'
+__author__ = 'José Orlando'
 __license__ = 'Unlicense'
 
 
