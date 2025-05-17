@@ -25,29 +25,34 @@ mensagem informando que já está reservado.
 import sys
 import logging
 
+RESERVAS_FILE = 'reservas.txt'
+QUARTOS_FILE = 'quartos.txt'
+
 ocupados = {}
 try:
-    for line in open('reservas.txt'):
-        nome, num_quarto,  dias = line.strip().split(',')
+    for line in open(RESERVAS_FILE):
+        nome_cliente, num_quarto,  dias = line.strip().split(',')
         ocupados[int(num_quarto)] = {
-            'nome':nome,
-            'dias': dias
+            'nome_cliente':nome_cliente,
+            'dias': int(dias)
         }
 except FileNotFoundError:
-    logging.error('Arquivo reservas.txt não existe')
+    logging.error('Arquivo %s não existe', RESERVAS_FILE)
     sys.exit(1)
 
+
+# TODO fazer função para ler os arquivos
 quartos = {}
 try:
-    for line in open('quartos.txt'):
-        codigo, nome,  preco = line.strip().split(',')
-        quartos[int(codigo)] = {
-            'nome':nome,
+    for line in open(QUARTOS_FILE):
+        num_quarto, nome_quarto, preco = line.strip().split(',')
+        quartos[int(num_quarto)] = {
+            'nome_quarto':nome_quarto,
             'preco':float(preco), #TODO: decimal
-            'disponivel': False if int(codigo) in ocupados else True
+            'disponivel': False if int(num_quarto) in ocupados else True
         }
 except FileNotFoundError:
-    logging.error('Arquivo quartos.txt não existe')
+    logging.error('Arquivo %s não existe', QUARTOS_FILE)
     sys.exit(1)
 
 print('*' * 52)
@@ -58,19 +63,19 @@ if len(ocupados) == len(quartos):
     print('Hotel lotado')
     sys.exit(0)
 
-nome = input('Nome do cliente: ').strip()
+nome_cliente = input('Nome do cliente: ').strip()
 print()
 print('Lista de quartos')
 print()
 head = ['Número', 'Nome do Quarto', 'Preço', 'Disponível']
 print(f'{head[0]:<6} - {head[1]:<14} - R$ {head[2]:<9} - {head[3]:<9}')
 
-for codigo, dados in quartos.items():
-    nome_quarto = dados['nome']
-    preco = dados['preco']
-    disponivel = '⛔' if not dados['disponivel'] else '👍'
+for num_quarto, dados_quarto in quartos.items():
+    nome_quarto = dados_quarto['nome_quarto']
+    preco = dados_quarto['preco']
+    disponivel = '⛔' if not dados_quarto['disponivel'] else '👍'
     #TODO: substituir casa decimal por virgula
-    print(f'{codigo:<6} - {nome_quarto:<14} - R${preco:<9.2f} - {disponivel:<9}')
+    print(f'{num_quarto:<6} - {nome_quarto:<14} - R${preco:<9.2f} - {disponivel:<9}')
 
 print('*' * 52)
 
@@ -92,13 +97,15 @@ except ValueError:
     logging.error('Número invalido, digite apenas dígitos.')
     sys.exit(1)
 
-nome_quarto = quartos[num_quarto]['nome']
+nome_quarto = quartos[num_quarto]['nome_quarto']
 preco_quarto = quartos[num_quarto]['preco']
-disponivel = quartos[num_quarto]['disponivel']
 total = preco_quarto * dias
 
-with open('reservas.txt', 'a') as file_:
-    file_.write(f'{nome},{num_quarto},{dias}\n')
+print(f'{nome_cliente}, você escolheu o {nome_quarto} e vai custar R${total:.2f}')
 
-print(f'{nome}, você escolheu o {nome_quarto} e vai custar R${total:.2f}')
+if input('Confirma? (digite y)').strip().lower() in ('y', 'yes', 'sim', 's'):
+    with open(RESERVAS_FILE, 'a') as reserva_file:
+        reserva_file .write(f'{nome_cliente},{num_quarto},{dias}\n')
+
+
 

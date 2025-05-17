@@ -32,7 +32,7 @@ while True:
     if info_size == filled_size:
         break
 
-    for key in info.keys():
+    for key in info.keys(): # iterando não sobre info, mas sobre um objeto novo
         if info[key] is not None:
             continue
         try:
